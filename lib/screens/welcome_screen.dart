@@ -1,7 +1,7 @@
-// lib/screens/welcome_screen.dart - Updated with Standard Flutter Buttons
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sprints_project_app/screens/login.dart';
-import 'package:sprints_project_app/screens/sigin_up.dart';
+import 'package:sprints_project_app/screens/sign_up.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -19,15 +19,60 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         backgroundColor: const Color(0xFF2196F3),
         elevation: 0,
         centerTitle: true,
-        title: const Text(
-          'Shop ALI',
-          style: TextStyle(
+        title: Text(
+          tr('app_title'), // Using localization
+          style: const TextStyle(
             fontFamily: 'Suwannaphum',
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 22,
           ),
         ),
+        actions: [
+          // Language Switcher Button
+          PopupMenuButton<Locale>(
+            icon: const Icon(Icons.language, color: Colors.white),
+            onSelected: (Locale locale) {
+              context.setLocale(locale);
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: const Locale('en', 'US'),
+                child: Row(
+                  children: [
+                    const Text('🇺🇸'),
+                    const SizedBox(width: 8),
+                    Text(
+                      'English',
+                      style: TextStyle(
+                        fontWeight: context.locale.languageCode == 'en'
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: const Locale('ar', 'EG'),
+                child: Row(
+                  children: [
+                    const Text('🇪🇬'),
+                    const SizedBox(width: 8),
+                    Text(
+                      'العربية',
+                      style: TextStyle(
+                        fontWeight: context.locale.languageCode == 'ar'
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -35,10 +80,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Welcome Text
-              const Text(
-                'Welcome to Shop ALI',
-                style: TextStyle(
+              // Welcome Text - Localized
+              Text(
+                tr('welcome_to_shop'), // Using localization
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF212121),
@@ -50,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               const SizedBox(height: 10),
 
               Text(
-                'Discover amazing products and great deals',
+                tr('discover_products'), // Using localization
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
@@ -82,6 +127,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       'https://picsum.photos/id/237/200/300',
                       width: 100,
                       height: 100,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.image_not_supported,
+                          size: 50,
+                          color: Colors.grey,
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -103,9 +155,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(15.0),
                     child: Image.asset(
-                      'assets/pngwing.com.png',
+                      'assets/images/sample_product.png',
                       width: 100,
                       height: 100,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.image_not_supported,
+                          size: 50,
+                          color: Colors.grey,
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -113,16 +172,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
               const SizedBox(height: 60),
 
-              // Standard Flutter Buttons
+              // Localized Buttons
               Column(
                 children: [
-                  // Primary Login Button (ElevatedButton)
+                  // Primary Login Button (ElevatedButton) - Localized
                   SizedBox(
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        print('Login button pressed');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -135,9 +193,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         color: Colors.white,
                         size: 20,
                       ),
-                      label: const Text(
-                        'Login',
-                        style: TextStyle(
+                      label: Text(
+                        tr('login'), // Using localization
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -156,17 +214,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
                   const SizedBox(height: 20),
 
-                  // Secondary Sign Up Button (OutlinedButton)
+                  // Secondary Sign Up Button (OutlinedButton) - Localized
                   SizedBox(
                     width: double.infinity,
                     height: 55,
                     child: OutlinedButton.icon(
                       onPressed: () {
-                        print('Sign Up button pressed');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SiginUp(),
+                            builder: (context) => const SignUp(),
                           ),
                         );
                       },
@@ -175,9 +232,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         color: Color(0xFF2196F3),
                         size: 20,
                       ),
-                      label: const Text(
-                        'Sign Up',
-                        style: TextStyle(
+                      label: Text(
+                        tr('sign_up'), // Using localization
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF2196F3),
@@ -198,15 +255,44 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ],
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 50),
 
-              // Text Button for Guest Access
-              const SizedBox(height: 20),
-
+              // Bottom text - Localized
               Text(
-                'Get started by creating an account or logging in',
+                tr('get_started'), // Using localization
                 style: TextStyle(fontSize: 14, color: Colors.grey[500]),
                 textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: 20),
+
+              // Language indicator
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.language, size: 16, color: Colors.grey[600]),
+                    const SizedBox(width: 4),
+                    Text(
+                      context.locale.languageCode == 'ar'
+                          ? 'العربية'
+                          : 'English',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
