@@ -78,7 +78,9 @@ Translations are managed in JSON files in the `lang` directory.
 - Implement dark mode
 <img width="1440" height="3120" alt="Screenshot_1755006317" src="https://github.com/user-attachments/assets/cc127484-27bc-4c30-aa32-cebb603d3850" />
 <img width="1440" height="3120" alt="Screenshot_1755006189" src="https://github.com/user-attachments/assets/76f4fe14-6d9e-42de-aaab-7b01b80a4c8a" />
-<img width="1440" height="3120" alt="Screenshot_1755006419" src="https://github.com/user-attachments/assets/0b24be98-41fb-444f-b696-3c8fdee4faae" />
+<img width="1440" height="3120" alt="Screenshot_1755006419" src="https://github.com/user-attachments/assets/0b24be98-41fb-444f-b696-3c8fdee4faae" /><img width="1440" height="3120" alt="Screenshot_1755007226" src="https://github.com/user-attachments/assets/842db1cd-88af-4862-b7c4-f7bdafca61e6" />
+<img width="1440" height="3120" alt="Screenshot_1755007217" src="https://github.com/user-attachments/assets/b80c07f5-f315-4210-bf37-42093cad28e9" />
+
 <img width="1440" height="3120" alt="Screenshot_1755006399" src="https://github.com/user-attachments/assets/670cd5bb-9699-441e-b817-3a77d7657d3f" />
 <img width="1440" height="3120" alt="Screenshot_1755006388" src="https://github.com/user-attachments/assets/001f6630-84dd-41a4-9d9e-91b16fc9094e" />
 <img width="1440" height="3120" alt="Screenshot_1755006355" src="https://github.com/user-attachments/assets/5471a66e-4b12-4200-9684-d9e3b7ccfa67" />
