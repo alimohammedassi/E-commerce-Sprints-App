@@ -13,290 +13,579 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isRTL = context.locale.languageCode == 'ar';
+    
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF2196F3),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          tr('app_title'), // Using localization
-          style: const TextStyle(
-            fontFamily: 'Suwannaphum',
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              const Color.fromARGB(255, 255, 255, 255),
+              const Color(0xFF1976D2),
+              const Color.fromARGB(255, 0, 0, 0),
+            ],
           ),
         ),
-        actions: [
-          // Language Switcher Button
-          PopupMenuButton<Locale>(
-            icon: const Icon(Icons.language, color: Colors.white),
-            onSelected: (Locale locale) {
-              context.setLocale(locale);
-            },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                value: const Locale('en', 'US'),
-                child: Row(
-                  children: [
-                    const Text('🇺🇸'),
-                    const SizedBox(width: 8),
-                    Text(
-                      'English',
-                      style: TextStyle(
-                        fontWeight: context.locale.languageCode == 'en'
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              PopupMenuItem(
-                value: const Locale('ar', 'EG'),
-                child: Row(
-                  children: [
-                    const Text('🇪🇬'),
-                    const SizedBox(width: 8),
-                    Text(
-                      'العربية',
-                      style: TextStyle(
-                        fontWeight: context.locale.languageCode == 'ar'
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
-                    ),
-                  ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Enhanced AppBar
+              _buildCustomAppBar(context, isRTL),
+              
+              // Main Content
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      
+                      // Welcome Content
+                      _buildWelcomeContent(context, isRTL),
+                      
+                      const SizedBox(height: 40),
+                      
+                      // Product Showcase
+                      _buildProductShowcase(),
+                      
+                      const SizedBox(height: 50),
+                      
+                      // Action Buttons
+                      _buildActionButtons(context, isRTL),
+                      
+                      const SizedBox(height: 30),
+                      
+                      // Footer
+                      _buildFooter(context, isRTL),
+                      
+                      const SizedBox(height: 20),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ],
+        ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Welcome Text - Localized
-              Text(
-                tr('welcome_to_shop'), // Using localization
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF212121),
-                  fontFamily: 'Suwannaphum',
+    );
+  }
+
+  Widget _buildCustomAppBar(BuildContext context, bool isRTL) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Row(
+        children: [
+          // App Logo/Icon
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
                 ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                tr('discover_products'), // Using localization
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 50),
-
-              // Image containers row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    width: 150,
-                    height: 150,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.network(
-                      'https://picsum.photos/id/237/200/300',
-                      width: 100,
-                      height: 100,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.image_not_supported,
-                          size: 50,
-                          color: Colors.grey,
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 12,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
-                    ),
-                    width: 150,
-                    height: 150,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(15.0),
-                    child: Image.asset(
-                      'assets/images/sample_product.png',
-                      width: 100,
-                      height: 100,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.image_not_supported,
-                          size: 50,
-                          color: Colors.grey,
-                        );
-                      },
-                    ),
+              ],
+            ),
+            child: const Icon(
+              Icons.shopping_bag,
+              color: Color(0xFF2196F3),
+              size: 28,
+            ),
+          ),
+          
+          const SizedBox(width: 16),
+          
+          // App Title
+          Expanded(
+            child: Text(
+              tr('app_title'),
+              style: const TextStyle(
+                fontFamily: 'Suwannaphum',
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                shadows: [
+                  Shadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 4,
+                    color: Colors.black26,
                   ),
                 ],
               ),
-
-              const SizedBox(height: 60),
-
-              // Localized Buttons
-              Column(
-                children: [
-                  // Primary Login Button (ElevatedButton) - Localized
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Login(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.login,
-                        color: Colors.white,
-                        size: 20,
-                      ),
-                      label: Text(
-                        tr('login'), // Using localization
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF2196F3),
-                        foregroundColor: Colors.white,
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Secondary Sign Up Button (OutlinedButton) - Localized
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUp(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.person_add,
-                        color: Color(0xFF2196F3),
-                        size: 20,
-                      ),
-                      label: Text(
-                        tr('sign_up'), // Using localization
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF2196F3),
-                        ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color(0xFF2196F3),
-                        side: const BorderSide(
-                          color: Color(0xFF2196F3),
-                          width: 2,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              // Bottom text - Localized
-              Text(
-                tr('get_started'), // Using localization
-                style: TextStyle(fontSize: 14, color: Colors.grey[500]),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 20),
-
-              // Language indicator
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(20),
-                ),
+            ),
+          ),
+          
+          // Enhanced Language Switcher
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: PopupMenuButton<Locale>(
+              icon: Container(
+                padding: const EdgeInsets.all(8),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.language, size: 16, color: Colors.grey[600]),
+                    const Icon(Icons.language, color: Colors.white, size: 20),
                     const SizedBox(width: 4),
                     Text(
-                      context.locale.languageCode == 'ar'
-                          ? 'العربية'
-                          : 'English',
-                      style: TextStyle(
+                      isRTL ? 'ع' : 'En',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                         fontSize: 12,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
               ),
+              onSelected: (Locale locale) {
+                context.setLocale(locale);
+              },
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem(
+                  value: const Locale('en', 'US'),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Text('🇺🇸', style: TextStyle(fontSize: 20)),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'English',
+                          style: TextStyle(
+                            fontWeight: context.locale.languageCode == 'en'
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: context.locale.languageCode == 'en'
+                                ? const Color(0xFF2196F3)
+                                : Colors.black,
+                          ),
+                        ),
+                        if (context.locale.languageCode == 'en')
+                          const Spacer()
+                        else
+                          const SizedBox.shrink(),
+                        if (context.locale.languageCode == 'en')
+                          const Icon(Icons.check, 
+                                     color: Color(0xFF2196F3), size: 20),
+                      ],
+                    ),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: const Locale('ar', 'EG'),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Text('🇪🇬', style: TextStyle(fontSize: 20)),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'العربية',
+                          style: TextStyle(
+                            fontWeight: context.locale.languageCode == 'ar'
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: context.locale.languageCode == 'ar'
+                                ? const Color(0xFF2196F3)
+                                : Colors.black,
+                          ),
+                        ),
+                        if (context.locale.languageCode == 'ar')
+                          const Spacer()
+                        else
+                          const SizedBox.shrink(),
+                        if (context.locale.languageCode == 'ar')
+                          const Icon(Icons.check, 
+                                     color: Color(0xFF2196F3), size: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWelcomeContent(BuildContext context, bool isRTL) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Welcome Icon
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color.fromARGB(255, 241, 241, 241).withOpacity(0.1),
+                  const Color.fromARGB(255, 255, 255, 255).withOpacity(0.1),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              ),
+
+            child: const Icon(
+              Icons.shopping_cart,
+              color: Color.fromARGB(255, 255, 255, 255),
+              size: 50,
+            ),
+          ),
+          
+          const SizedBox(height: 20),
+          
+          // Welcome Text
+          Text(
+            tr('welcome_message') ?? 'Welcome to Our Shopping App',
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 255, 255),
+            ),
+            textAlign: isRTL ? TextAlign.right : TextAlign.left,
+          ),
+          
+          const SizedBox(height: 10),
+          
+          // Description Text
+          Text(
+            tr('welcome_description') ?? 'Discover the best products at unbeatable prices.',
+            style: const TextStyle(fontSize: 16, color: Colors.black54),
+            textAlign: isRTL ? TextAlign.right : TextAlign.left,
+          ),
+        
+      ],));
+    
+  }        
+    
+  
+
+  Widget _buildProductShowcase() {
+    return SizedBox(
+      height: 200,
+      child: PageView.builder(
+        itemCount: 3,
+        itemBuilder: (context, index) {
+          final images = [
+            'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400',
+            'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=400',
+            'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400',
+          ];
+          
+          final titles = [
+            tr('featured_products') ?? 'Featured Products',
+            tr('trending_items') ?? 'Trending Items', 
+            tr('best_deals') ?? 'Best Deals',
+          ];
+          
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 15,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Stack(
+                children: [
+                  // Background Image
+                  Image.network(
+                    images[index],
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[300],
+                        child: const Icon(
+                          Icons.image_not_supported,
+                          size: 50,
+                          color: Colors.grey,
+                        ),
+                      );
+                    },
+                  ),
+                  
+                  // Gradient Overlay
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.7),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                  // Text Overlay
+                  Positioned(
+                    bottom: 20,
+                    left: 20,
+                    right: 20,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          titles[index],
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF2196F3),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            tr('explore_now') ?? 'Explore Now',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context, bool isRTL) {
+    return Column(
+      children: [
+        // Enhanced Login Button
+        Container(
+          width: double.infinity,
+          height: 60,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF2196F3), Color(0xFF1976D2)],
+            ),
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF2196F3).withOpacity(0.4),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
             ],
           ),
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Login(),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.login_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  tr('login'),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
+
+        const SizedBox(height: 20),
+
+        // Enhanced Sign Up Button
+        SizedBox(
+          width: double.infinity,
+          height: 60,
+          child: OutlinedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SignUp(),
+                ),
+              );
+            },
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.white.withOpacity(0.1),
+              side: const BorderSide(
+                color: Colors.white,
+                width: 2,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.person_add_rounded,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  tr('sign_up'),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooter(BuildContext context, bool isRTL) {
+    return Column(
+      children: [
+        // Features Row
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildFeatureItem(Icons.security, tr('secure_shopping') ?? 'Secure'),
+            _buildFeatureItem(Icons.local_shipping, tr('fast_delivery') ?? 'Fast'),
+            _buildFeatureItem(Icons.verified_user, tr('verified_products') ?? 'Verified'),
+          ],
+        ),
+        
+        const SizedBox(height: 20),
+        
+        // Get Started Text
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Text(
+            tr('get_started'),
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureItem(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.15),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 24,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }

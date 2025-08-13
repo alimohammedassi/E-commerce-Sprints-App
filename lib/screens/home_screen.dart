@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sprints_project_app/Categoris/all.dart';
 import 'package:sprints_project_app/screens/favorites_page.dart';
 import 'package:sprints_project_app/screens/profile_page.dart';
 import 'package:sprints_project_app/screens/search.dart';
 import 'dart:async';
-
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
-  int _currentIndex = 3;
+  int _currentIndex = 0;
   Timer? _timer;
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
@@ -307,10 +307,17 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             children: [
               IconButton(
                 icon: const Icon(
-                  Icons.notifications_outlined,
-                  color: Colors.black87,
+                  Icons.favorite_border,
+                  color: Color.fromARGB(221, 199, 10, 10),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavoritesPage(),
+                    ),
+                  );
+                },
               ),
               Positioned(
                 right: 8,
@@ -318,7 +325,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   constraints: const BoxConstraints(
@@ -566,7 +573,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     ),
                     const Spacer(),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const All()),
+                        );
+                      },
                       child: const Text(
                         'See All',
                         style: TextStyle(color: Color(0xFF2196F3)),
@@ -975,58 +987,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Colors.white,
+        color: const Color.fromARGB(255, 42, 146, 243),
 
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
+              icon: Icon(Icons.favorite),
               label: 'Favorites',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
-          currentIndex: _currentIndex,
-          selectedItemColor: const Color(0xFF2196F3),
-          unselectedItemColor: Colors.grey,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-
-            // Navigate to respective pages based on index
-            switch (index) {
-              case 0:
-                // Home - stay on current page
-                break;
-              case 1:
-                // Search
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SearchPage()),
-                );
-                break;
-              case 2:
-                // Favorites
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FavoritesPage(),
-                  ),
-                );
-                break;
-              case 3:
-                // Profile
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const profile()),
-                );
-                break;
-            }
-          },
         ),
       ),
     );
