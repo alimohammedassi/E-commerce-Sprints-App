@@ -13,7 +13,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final isRTL = context.locale.languageCode == 'ar';
     
     return Scaffold(
@@ -317,9 +316,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ];
           
           final titles = [
-            tr('featured_products') ?? 'Featured Products',
-            tr('trending_items') ?? 'Trending Items', 
-            tr('best_deals') ?? 'Best Deals',
+            tr('featured_products'),
+            tr('trending_items'), 
+            tr('best_deals'),
           ];
           
           return Container(
@@ -533,9 +532,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildFeatureItem(Icons.security, tr('secure_shopping') ?? 'Secure'),
-            _buildFeatureItem(Icons.local_shipping, tr('fast_delivery') ?? 'Fast'),
-            _buildFeatureItem(Icons.verified_user, tr('verified_products') ?? 'Verified'),
+            _buildFeatureItem(Icons.security, tr('secure_shopping')),
+            _buildFeatureItem(Icons.local_shipping, tr('fast_delivery')),
+            _buildFeatureItem(Icons.verified_user, tr('verified_products')),
           ],
         ),
         

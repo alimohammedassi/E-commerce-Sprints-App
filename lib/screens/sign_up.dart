@@ -239,6 +239,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     );
   }
 
+  // ignore: unused_element
   Widget _buildPasswordStrengthIndicator() {
     final password = passwordController.text;
     int strength = 0;
